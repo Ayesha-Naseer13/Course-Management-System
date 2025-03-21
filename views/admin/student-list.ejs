@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Management</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <%- include('header') %>
+    <div class="content">
+        <h1>Student Registrations</h1>
+        <a href="/admin/students/new" class="btn">Add New Student</a>
+        <div class="student-list">
+            <% students.forEach(student => { %>
+            <div class="student-card">
+                <h3><%= student.rollNumber %> - <%= student.name %></h3>
+                <a href="/admin/students/<%= student._id %>">Manage Registrations</a>
+                <form action="/admin/students/<%= student._id %>" method="POST">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit">Delete Student</button>
+                </form>
+            </div>
+            <% }); %>
+        </div>
+    </div>
+</body>
+</html>

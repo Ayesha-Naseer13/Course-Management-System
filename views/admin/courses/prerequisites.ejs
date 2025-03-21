@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Prerequisites</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <%- include('../partials/admin-header') %>
+    
+    <div class="container">
+        <h1>Set Prerequisites for <%= course.code %></h1>
+        
+        <form method="POST">
+            <div class="prerequisites-list">
+                <% allCourses.forEach(c => { %>
+                    <% if (!c._id.equals(course._id)) { %>
+                        <label class="checkbox">
+                            <input type="checkbox" name="prerequisites" 
+                                   value="<%= c._id %>"
+                                   <%= course.prerequisites.some(p => p.equals(c._id)) ? 'checked' : '' %>>
+                            <%= c.code %> - <%= c.name %>
+                        </label>
+                    <% } %>
+                <% }); %>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Save Prerequisites</button>
+        </form>
+    </div>
+    
+    <%- include('../partials/admin-footer') %>
+</body>
+</html>

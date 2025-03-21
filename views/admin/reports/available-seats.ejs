@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Available Seats Report</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <%- include('header') %>
+    <div class="content">
+        <h1>Courses with Available Seats</h1>
+        <div class="course-list">
+            <% courses.forEach(course => { %>
+            <% if (course.registeredStudents.length < course.seats) { %>
+            <div class="course-item">
+                <h3><%= course.code %> - <%= course.name %></h3>
+                <p>Available Seats: <%= course.seats - course.registeredStudents.length %></p>
+            </div>
+            <% } %>
+            <% }); %>
+        </div>
+    </div>
+</body>
+</html>

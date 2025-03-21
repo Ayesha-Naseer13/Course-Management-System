@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Students in Course</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <%- include('header') %>
+    <div class="content">
+        <h1>Students in Course Report</h1>
+        <form action="/admin/reports/students-in-course" method="GET">
+            <select name="courseId" required>
+                <% courses.forEach(course => { %>
+                <option value="<%= course._id %>"><%= course.code %> - <%= course.name %></option>
+                <% }); %>
+            </select>
+            <button type="submit">Generate Report</button>
+        </form>
+
+        <% if (selectedCourse) { %>
+        <div class="report-results">
+            <h2><%= selectedCourse.code %> - <%= selectedCourse.name %></h2>
+            <ul>
+                <% selectedCourse.registeredStudents.forEach(student => { %>
+                <li><%= student.rollNumber %> - <%= student.name %></li>
+                <% }); %>
+            </ul>
+        </div>
+        <% } %>
+    </div>
+</body>
+</html>

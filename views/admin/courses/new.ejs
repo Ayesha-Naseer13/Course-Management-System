@@ -1,0 +1,32 @@
+<%- include('../../partials/admin-header') %>
+<div class="container">
+    <h2><%= typeof course !== 'undefined' ? 'Edit' : 'New' %> Course</h2>
+    <% if (error) { %>
+        <div class="alert error"><%= error %></div>
+    <% } %>
+    
+    <form method="POST" 
+          action="<%= typeof course !== 'undefined' ? `/admin/courses/${course.id}?_method=PUT` : '/admin/courses' %>">
+        <div class="form-group">
+            <label>Course Code:</label>
+            <input type="text" name="code" required 
+                   value="<%= course?.code || '' %>">
+        </div>
+        <div class="form-group">
+            <label>Course Name:</label>
+            <input type="text" name="name" required
+                   value="<%= course?.name || '' %>">
+        </div>
+        <div class="form-group">
+            <label>Description:</label>
+            <textarea name="description"><%= course?.description || '' %></textarea>
+        </div>
+        <div class="form-group">
+            <label>Total Seats:</label>
+            <input type="number" name="seats" required min="1"
+                   value="<%= course?.seats || '' %>">
+        </div>
+        <button type="submit" class="btn">Save</button>
+    </form>
+</div>
+<%- include('../../partials/admin-footer') %>

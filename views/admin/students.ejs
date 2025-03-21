@@ -1,0 +1,34 @@
+<% include ../partials/admin-header %>
+
+<div class="container">
+    <h1>Student Management</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Roll Number</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Registered Courses</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% students.forEach(student => { %>
+                <tr>
+                    <td><%= student.rollNumber %></td>
+                    <td><%= student.name %></td>
+                    <td><%= student.department %></td>
+                    <td><%= student.registeredCourses.length %></td>
+                    <td>
+                        <a href="/admin/students/<%= student.id %>/registrations" class="btn">
+                            Manage Registrations
+                        </a>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</div>
+
+<% include ../partials/admin-footer %>

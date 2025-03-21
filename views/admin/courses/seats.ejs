@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Seats</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <%- include('../partials/admin-header') %>
+    
+    <div class="container">
+        <h1>Manage Seats for <%= course.code %></h1>
+        
+        <form method="POST">
+            <div class="form-group">
+                <label>Current Seats: <%= course.registeredStudents.length %></label>
+            </div>
+            
+            <div class="form-group">
+                <label>New Total Seats:</label>
+                <input type="number" name="seats" 
+                       value="<%= course.seats %>" 
+                       min="<%= course.registeredStudents.length %>" 
+                       required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Update Seats</button>
+        </form>
+    </div>
+    
+    <%- include('../partials/admin-footer') %>
+</body>
+</html>

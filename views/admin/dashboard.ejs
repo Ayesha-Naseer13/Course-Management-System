@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Course Registration</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+   <%- include('../partials/admin-header') %>
+    <div class="content">
+        <section class="course-management">
+          <h2>Course Management</h2>
+          <a href="/admin/courses/new" class="btn">Add New Course</a>
+          
+          <% if (courses && courses.length) { %>
+            <% courses.forEach(course => { %>
+              <div class="course-card">
+                <h3><%= course.code %> - <%= course.name %></h3>
+                <p>Seats: <%= course.registeredStudents?.length || 0 %>/<%= course.seats %></p>
+                <form action="/admin/courses/<%= course._id %>/seats" method="POST">
+                  <input type="number" name="seats" value="<%= course.seats %>">
+                  <button type="submit">Update Seats</button>
+                </form>
+                <a href="/admin/courses/<%= course._id %>/edit">Edit</a>
+              </div>
+            <% }); %>
+          <% } else { %>
+            <div class="no-courses">
+              <p>No courses found in the system.</p>
+            </div>
+          <% } %>
+        </section>
+      </div>
+      <%- include('../partials/admin-footer') %>
+</body>

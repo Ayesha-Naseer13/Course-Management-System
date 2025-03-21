@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Management</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <%- include('../partials/admin-header') %>
+    
+    <div class="container">
+        <h1>Course Management</h1>
+        <a href="/admin/courses/new" class="btn btn-primary">Add New Course</a>
+        
+        <% if (courses.length) { %>
+            <div class="course-grid">
+                <% courses.forEach(course => { %>
+                    <div class="course-card">
+                        <h3><%= course.code %> - <%= course.name %></h3>
+                        <p>Department: <%= course.department %></p>
+                        <p>Seats: <%= course.registeredStudents.length %>/<%= course.seats %></p>
+                        
+                        <div class="course-actions">
+                            <a href="/admin/courses/<%= course._id %>/edit" class="btn btn-primary">Edit</a>
+                            <a href="/admin/courses/<%= course._id %>/prerequisites" class="btn btn-primary">Prerequisites</a>
+                            <form action="/admin/courses/<%= course._id %>?_method=DELETE" method="POST" style="display: inline;">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        <% } else { %>
+            <p>No courses found.</p>
+        <% } %>
+    </div>
+    
+    <%- include('../partials/admin-footer') %>
+</body>
+</html>

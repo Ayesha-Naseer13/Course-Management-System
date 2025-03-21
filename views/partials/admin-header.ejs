@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* Unified Header Styles */
+        .admin-header {
+            background-color: #2c3e50;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            position: relative;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        .nav-section {
+            display: flex;
+            gap: 25px;
+            transition: 0.3s;
+        }
+
+        /* Mobile Menu Styles */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-section {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 250px;
+                background: #2c3e50;
+                flex-direction: column;
+                padding: 80px 20px 20px;
+                transition: 0.3s;
+                z-index: 1000;
+            }
+
+            .nav-section.active {
+                right: 0;
+            }
+
+            .dropdown {
+                width: 100%;
+            }
+
+            .dropdown-content {
+                position: static;
+                box-shadow: none;
+                background-color: #34495e;
+                display: none;
+            }
+
+            .dropdown:hover .dropdown-content {
+                display: none;
+            }
+
+            .dropdown.active .dropdown-content {
+                display: block;
+            }
+
+            .nav-button {
+                width: 100%;
+                text-align: left;
+                background: none;
+                padding: 12px;
+            }
+
+            .dropdown-content a {
+                color: white;
+                padding: 10px 20px;
+            }
+
+            .dropdown-content a:hover {
+                background-color: #3a556f;
+            }
+        }
+
+        /* Existing styles remain unchanged */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 220px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .nav-button {
+            background-color: #34495e;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background-color: #3a556f;
+            transform: translateY(-1px);
+        }
+
+        .dropdown-content a {
+            color: #2c3e50;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.2s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ecf0f1;
+        }
+
+        .logout-btn {
+            background-color: #e74c3c;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-1px);
+        }
+
+        .admin-header .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <button class="hamburger" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="nav-section">
+            <!-- Course Management Dropdown -->
+            <div class="dropdown">
+                <button class="nav-button">Course Management</button>
+                <div class="dropdown-content">
+                    <a href="/admin/courses/new">Add Course</a>
+                    <a href="/admin/courses">Manage Courses</a>
+                </div>
+            </div>
+
+            <!-- Student Management Dropdown -->
+            <div class="dropdown">
+                <button class="nav-button">Student Management</button>
+                <div class="dropdown-content">
+                    <a href="/admin/students">View Students</a>
+                    <a href="/admin/students/new">Add Student</a>
+                </div>
+            </div>
+
+            <!-- Reports Dropdown -->
+            <div class="dropdown">
+                <button class="nav-button">Reports</button>
+                <div class="dropdown-content">
+                    <a href="/admin/reports/students-in-course">Students in Course</a>
+                    <a href="/admin/reports/available-seats">Available Seats</a>
+                    <a href="/admin/reports/missing-prerequisites">Missing Prerequisites</a>
+                </div>
+            </div>
+        </nav>
+
+        <form action="/admin/logout" method="POST">
+            <button class="logout-btn">Logout</button>
+        </form>
+    </header>
+
+    <script>
+        // Mobile Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navSection = document.querySelector('.nav-section');
+        const dropdowns = document.querySelectorAll('.dropdown');
+
+        hamburger.addEventListener('click', () => {
+            navSection.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navSection.contains(e.target) && !hamburger.contains(e.target)) {
+                navSection.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+
+        // Mobile Dropdown Handling
+        dropdowns.forEach(dropdown => {
+            const button = dropdown.querySelector('.nav-button');
+            const content = dropdown.querySelector('.dropdown-content');
+
+            button.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                    content.style.display = content.style.display === 'block' ? 'none' : 'block';
+                }
+            });
+        });
+
+        // Close menu on ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                navSection.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

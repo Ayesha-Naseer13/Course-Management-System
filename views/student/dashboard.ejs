@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="/css/student.css">
+    
+</head>
+<body>
+   
+    <%- include('../partials/student-header') %>
+    <div class="container">
+        <!-- Schedule Calendar -->
+        <div class="calendar">
+            <div class="calendar-header">
+                <h2>Weekly Schedule</h2>
+                <div class="legend">
+                    <span class="registered">Registered Courses</span>
+                    <span class="tentative">Tentative Selection</span>
+                    <span class="conflict">Conflicts</span>
+                </div>
+            </div>
+            <div class="calendar-grid" id="calendar"></div>
+        </div>
+
+        <!-- Course Search -->
+        <div class="course-search">
+            <h2>Find Courses</h2>
+            <div class="filters">
+                <input type="text" id="search" placeholder="Search courses...">
+                <select id="department">
+                    <option value="">All Departments</option>
+                    <option>Computer Science</option>
+                    <option>Software Engineering</option>
+                </select>
+                <select id="time">
+                    <option value="">Any Time</option>
+                    <option>Morning</option>
+                    <option>Afternoon</option>
+                </select>
+            </div>
+            <div class="course-list" id="courseList"></div>
+        </div>
+    </div>
+
+    <script src="/js/student/schedule.js"></script>
+    <script src="/js/student/course-catalog.js"></script>
+</body>
+</html>

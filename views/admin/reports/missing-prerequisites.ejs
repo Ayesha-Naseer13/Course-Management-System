@@ -1,0 +1,25 @@
+<% include ../partials/admin-header %>
+
+<div class="container">
+    <h1>Students with Missing Prerequisites</h1>
+    
+    <% if(results.length > 0) { %>
+        <% results.forEach(result => { %>
+            <div class="card">
+                <h3><%= result.student.name %> (<%= result.student.rollNumber %>)</h3>
+                <div class="department"><%= result.student.department %></div>
+                
+                <% result.issues.forEach(issue => { %>
+                    <div class="alert">
+                        <h4><%= issue.course %></h4>
+                        <p>Missing prerequisites: <%= issue.missing.join(', ') %></p>
+                    </div>
+                <% }); %>
+            </div>
+        <% }); %>
+    <% } else { %>
+        <div class="alert success">All students meet course prerequisites!</div>
+    <% } %>
+</div>
+
+<% include ../partials/admin-footer %>

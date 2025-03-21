@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Details</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <%- include('header') %>
+    <div class="content">
+        <h1><%= student.name %> - <%= student.rollNumber %></h1>
+        
+        <div class="registration-section">
+            <h2>Current Registrations</h2>
+            <% student.registeredCourses.forEach(course => { %>
+            <div class="course-item">
+                <span><%= course.code %> - <%= course.name %></span>
+                <form action="/admin/students/<%= student._id %>/courses/<%= course._id %>" method="POST">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit">Drop Course</button>
+                </form>
+            </div>
+            <% }); %>
+        </div>
+
+        <div class="override-section">
+            <h2>Override Registration</h2>
+            <form action="/admin/students/<%= student._id %>/courses" method="POST">
+                <select name="courseId" required>
+                    <% courses.forEach(course => { %>
+                    <option value="<%= course._id %>"><%= course.code %> - <%= course.name %></option>
+                    <% }); %>
+                </select>
+                <button type="submit">Force Register</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/css/headers.css">
+  
+</head>
+<body>
+    <header class="header student">
+        <button class="hamburger" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="nav-section">
+            <div class="dropdown">
+                <button class="nav-button">Course Search</button>
+                <div class="dropdown-content">
+                    <a href="/student/courses/search">Advanced Filters</a>
+                    <a href="/student/courses/saved">Saved Courses</a>
+                    <a href="/student/prerequisites">Prerequisite Check</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="nav-button">My Schedule</button>
+                <div class="dropdown-content">
+                    <div class="schedule-preview">
+                        <h4>Tentative Schedule</h4>
+                        <p>Courses: 3/5</p>
+                        <p>Credits: 12</p>
+                        <button class="nav-button" style="margin-top: 10px;">Save Draft</button>
+                    </div>
+                </div>
+            </div>
+
+            <a href="/student/calendar" class="nav-button">Calendar View</a>
+            <a href="/student/prerequisites-map" class="nav-button">Prerequisites Map</a>
+        </nav>
+
+        <div class="profile-section">
+            <div class="dropdown">
+                <button class="nav-button">👤 <%= student.rollNumber %></button>
+                <div class="dropdown-content">
+                    <a href="/student/profile">Profile</a>
+                    <a href="/student/history">Registration History</a>
+                    <a href="/student/progress">Academic Progress</a>
+                </div>
+            </div>
+            <form action="/logout" method="POST">
+                <button class="logout-btn">Logout</button>
+            </form>
+        </div>
+    </header>
+
+    <script>
+        // Mobile Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navSection = document.querySelector('.nav-section');
+        const dropdowns = document.querySelectorAll('.dropdown');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navSection.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navSection.contains(e.target) && !hamburger.contains(e.target)) {
+                hamburger.classList.remove('active');
+                navSection.classList.remove('active');
+            }
+        });
+
+        // Mobile Dropdown Handling
+        dropdowns.forEach(dropdown => {
+            const button = dropdown.querySelector('.nav-button');
+            const content = dropdown.querySelector('.dropdown-content');
+
+            button.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                }
+            });
+        });
+
+        // Close menu on ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                hamburger.classList.remove('active');
+                navSection.classList.remove('active');
+            }
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-section a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navSection.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
